@@ -1,0 +1,1891 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#B9F0FF" />
+  <title>Karan Bhoi | Web Solutions & AI Engineer (React)</title>
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              bg: '#B9F0FF',
+              dark: '#081420',
+              deep: '#0E2439',
+              card: 'rgba(255, 255, 255, 0.75)',
+              cardHover: 'rgba(255, 255, 255, 0.92)',
+              border: 'rgba(0, 110, 170, 0.22)',
+              borderFocus: '#00A3E0',
+              accent: '#007BB8',
+              glow: '#00C8FF',
+              textPrimary: '#071828',
+              textSecondary: '#2C4A63',
+              textMuted: '#58768F'
+            }
+          },
+          fontFamily: {
+            headline: ['Manrope', 'sans-serif'],
+            body: ['Inter', 'sans-serif'],
+            code: ['"JetBrains Mono"', 'monospace']
+          }
+        }
+      }
+    };
+  </script>
+
+  <!-- React 18 & ReactDOM & Babel for Standalone Frontend with JSX -->
+  <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+  <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+  <style>
+    *, *::before, *::after {
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      max-width: 100vw;
+      background-color: #B9F0FF;
+      color: #071828;
+      overflow-x: hidden;
+      font-family: 'Inter', sans-serif;
+      -webkit-text-size-adjust: 100%;
+      text-rendering: optimizeLegibility;
+    }
+
+    img, svg, video, canvas {
+      max-width: 100%;
+      height: auto;
+    }
+
+    /* Custom Webkit Scrollbar tuned for #B9F0FF */
+    ::-webkit-scrollbar {
+      width: 9px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #B9F0FF;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #73C9E2;
+      border-radius: 9999px;
+      border: 2px solid #B9F0FF;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #009FD6;
+    }
+
+    /* Moving background ambient light rings */
+    .bg-radiance {
+      background: 
+        radial-gradient(circle at 15% 15%, rgba(255, 255, 255, 0.75) 0%, transparent 40%),
+        radial-gradient(circle at 85% 25%, rgba(144, 230, 252, 0.6) 0%, transparent 45%),
+        radial-gradient(circle at 50% 80%, rgba(255, 255, 255, 0.65) 0%, transparent 50%),
+        #B9F0FF;
+    }
+
+    /* Glassmorphism Cards */
+    .glass-card {
+      background: rgba(255, 255, 255, 0.76);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      border: 1px solid rgba(0, 115, 175, 0.18);
+      box-shadow: 0 12px 35px -8px rgba(0, 60, 100, 0.08), 0 2px 6px rgba(0, 60, 100, 0.04);
+      transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .glass-card:hover {
+      background: rgba(255, 255, 255, 0.92);
+      border-color: rgba(0, 155, 230, 0.5);
+      box-shadow: 0 20px 45px -10px rgba(0, 120, 190, 0.22), 0 0 22px rgba(0, 195, 255, 0.25);
+      transform: translateY(-3px);
+    }
+
+    /* Clean Skill Button without distracting glow/flow effects */
+    .skill-button-glow {
+      background: #ffffff;
+      border: 1px solid rgba(0, 163, 224, 0.25);
+      box-shadow: 0 1px 3px rgba(0, 80, 140, 0.05);
+      transition: all 0.2s ease;
+    }
+    .skill-button-glow:hover {
+      background: #f4fcff;
+      border-color: #00A3E0;
+      box-shadow: 0 2px 6px rgba(0, 120, 190, 0.08);
+    }
+
+    /* High Tech Dark Card for Code/Terminal on #B9F0FF */
+    .glass-dark {
+      background: rgba(8, 20, 34, 0.92);
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(0, 200, 255, 0.32);
+      box-shadow: 0 24px 50px -12px rgba(2, 14, 26, 0.4), 0 0 25px rgba(0, 180, 255, 0.15);
+    }
+
+    /* ========================================================
+       IMAGE SIDE GLOW EFFECT
+       ======================================================== */
+    /* Clean, sleek portrait card without heavy shadows */
+    .clean-portrait-card {
+      position: relative;
+      border-radius: 28px;
+      padding: 8px;
+      background: rgba(255, 255, 255, 0.85);
+      border: 1px solid rgba(0, 140, 210, 0.22);
+      box-shadow: 0 8px 24px -4px rgba(0, 80, 130, 0.08);
+      backdrop-filter: blur(14px);
+      transition: all 0.3s ease;
+    }
+    .clean-portrait-card:hover {
+      box-shadow: 0 12px 28px -4px rgba(0, 110, 180, 0.12);
+      border-color: rgba(0, 160, 240, 0.35);
+    }
+
+    /* Holographic corner reticles */
+    .hud-reticle {
+      position: absolute;
+      width: 14px;
+      height: 14px;
+      border-color: #00a3e0;
+      pointer-events: none;
+      z-index: 20;
+      transition: all 0.3s ease;
+    }
+    .image-side-glow-container:hover .hud-reticle {
+      border-color: #00d2ff;
+      filter: drop-shadow(0 0 6px #00d2ff);
+    }
+
+    /* Floating Pill Navbar matching #B9F0FF background seamlessly */
+    .navbar-pill-themed {
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.65) 0%, rgba(185, 240, 255, 0.48) 50%, rgba(255, 255, 255, 0.62) 100%);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.85);
+      box-shadow: 
+        0 10px 30px -5px rgba(0, 110, 175, 0.12),
+        0 2px 8px -2px rgba(0, 110, 175, 0.05),
+        inset 0 1px 1px 0 rgba(255, 255, 255, 0.95);
+      transition: all 0.3s ease;
+    }
+    .navbar-pill-themed:hover {
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.75) 0%, rgba(185, 240, 255, 0.58) 50%, rgba(255, 255, 255, 0.72) 100%);
+      border-color: rgba(255, 255, 255, 0.95);
+      box-shadow: 
+        0 14px 35px -5px rgba(0, 120, 190, 0.18),
+        0 0 20px rgba(0, 200, 255, 0.2),
+        inset 0 1px 2px 0 rgba(255, 255, 255, 1);
+    }
+
+    /* Subtitle Tag styling */
+    .pill-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.375rem;
+      padding: 0.25rem 0.75rem;
+      border-radius: 9999px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      background: rgba(0, 140, 210, 0.12);
+      color: #006899;
+      border: 1px solid rgba(0, 140, 210, 0.25);
+    }
+  </style>
+</head>
+<body class="bg-radiance min-h-screen relative selection:bg-brand-deep selection:text-white">
+
+  <!-- Interactive Multiple Dots Canvas (Moving Particles Background) -->
+  <canvas id="particle-canvas" class="fixed inset-0 pointer-events-none z-0"></canvas>
+
+  <!-- React Root Container -->
+  <div id="root" class="relative z-10 flex flex-col min-h-screen w-full overflow-x-hidden"></div>
+
+  <!-- React Application Logic with Babel -->
+  <script type="text/babel">
+    const { useState, useEffect, useRef, useMemo } = React;
+
+    // ==========================================
+    // 1. BACKGROUND MOVING DOTS CANVAS LOGIC
+    // ==========================================
+    function BackgroundDotsCanvas({ dotSpeed = 1, dotCount = 75, connectDistance = 110 }) {
+      useEffect(() => {
+        const canvas = document.getElementById('particle-canvas');
+        if (!canvas) return;
+        const ctx = canvas.getContext('2d');
+        let animationFrameId;
+        let width = (canvas.width = window.innerWidth);
+        let height = (canvas.height = window.innerHeight);
+
+        const handleResize = () => {
+          width = canvas.width = window.innerWidth;
+          height = canvas.height = window.innerHeight;
+        };
+        window.addEventListener('resize', handleResize);
+
+        // Mouse attraction / repulsion tracking
+        const mouse = { x: null, y: null, radius: 140 };
+        const handleMouseMove = (e) => {
+          mouse.x = e.clientX;
+          mouse.y = e.clientY;
+        };
+        const handleMouseLeave = () => {
+          mouse.x = null;
+          mouse.y = null;
+        };
+        window.addEventListener('mousemove', handleMouseMove);
+        window.addEventListener('mouseleave', handleMouseLeave);
+
+        // Initialize particles
+        const particles = [];
+        for (let i = 0; i < dotCount; i++) {
+          particles.push({
+            x: Math.random() * width,
+            y: Math.random() * height,
+            vx: (Math.random() - 0.5) * 0.9 * dotSpeed,
+            vy: (Math.random() - 0.5) * 0.9 * dotSpeed,
+            radius: Math.random() * 2.2 + 1.2,
+            baseAlpha: Math.random() * 0.45 + 0.35,
+            colorHue: Math.random() > 0.4 ? '0, 110, 180' : '0, 165, 235'
+          });
+        }
+
+        const render = () => {
+          ctx.clearRect(0, 0, width, height);
+
+          // Update & draw particles
+          for (let i = 0; i < particles.length; i++) {
+            const p = particles[i];
+
+            // Movement
+            p.x += p.vx;
+            p.y += p.vy;
+
+            // Bounce on edges
+            if (p.x < 0 || p.x > width) p.vx *= -1;
+            if (p.y < 0 || p.y > height) p.vy *= -1;
+
+            // Mouse proximity repulsion/nudge
+            if (mouse.x !== null && mouse.y !== null) {
+              const dx = p.x - mouse.x;
+              const dy = p.y - mouse.y;
+              const dist = Math.sqrt(dx * dx + dy * dy);
+              if (dist < mouse.radius) {
+                const force = (mouse.radius - dist) / mouse.radius;
+                p.x += (dx / dist) * force * 2.5;
+                p.y += (dy / dist) * force * 2.5;
+              }
+            }
+
+            // Draw dot
+            ctx.beginPath();
+            ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+            ctx.fillStyle = `rgba(${p.colorHue}, ${p.baseAlpha})`;
+            ctx.shadowBlur = 8;
+            ctx.shadowColor = `rgba(${p.colorHue}, 0.5)`;
+            ctx.fill();
+            ctx.shadowBlur = 0; // reset shadow
+
+            // Connect neighboring dots with subtle lines
+            for (let j = i + 1; j < particles.length; j++) {
+              const p2 = particles[j];
+              const dist = Math.hypot(p.x - p2.x, p.y - p2.y);
+              if (dist < connectDistance) {
+                const alpha = (1 - dist / connectDistance) * 0.28;
+                ctx.beginPath();
+                ctx.moveTo(p.x, p.y);
+                ctx.lineTo(p2.x, p2.y);
+                ctx.strokeStyle = `rgba(0, 120, 195, ${alpha})`;
+                ctx.lineWidth = 0.85;
+                ctx.stroke();
+              }
+            }
+          }
+
+          animationFrameId = requestAnimationFrame(render);
+        };
+
+        render();
+
+        return () => {
+          window.removeEventListener('resize', handleResize);
+          window.removeEventListener('mousemove', handleMouseMove);
+          window.removeEventListener('mouseleave', handleMouseLeave);
+          cancelAnimationFrame(animationFrameId);
+        };
+      }, [dotSpeed, dotCount, connectDistance]);
+
+      return null;
+    }
+
+    // ==========================================
+    // 2. NAVIGATION BAR COMPONENT
+    // ==========================================
+    // ==========================================
+    // 2. NAVIGATION BAR COMPONENT (Floating Pill Matched with #B9F0FF Theme)
+    // ==========================================
+    function Navbar() {
+      const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+      const [activeTab, setActiveTab] = useState('About');
+      const navRef = useRef(null);
+      const [indicatorStyle, setIndicatorStyle] = useState({ left: 0, width: 0, opacity: 0 });
+
+      const navLinks = [
+        { label: 'About', href: '#hero', id: 'hero' },
+        { label: 'Services', href: '#services', id: 'services' },
+        { label: 'Projects', href: '#projects', id: 'projects' },
+        { label: 'Process', href: '#process', id: 'process' },
+        { label: 'Journey', href: '#journey', id: 'journey' },
+        { label: 'Skills', href: '#skills', id: 'skills' },
+        { label: 'Contact', href: '#contact', id: 'contact' }
+      ];
+
+      // Scroll Spy: Automatically detect active section while scrolling
+      useEffect(() => {
+        const handleScroll = () => {
+          const scrollY = window.scrollY;
+          const viewportHeight = window.innerHeight;
+          const fullHeight = document.documentElement.scrollHeight;
+
+          // If scrolled to near the bottom of the page, activate Contact
+          if (scrollY + viewportHeight >= fullHeight - 80) {
+            setActiveTab('Contact');
+            return;
+          }
+
+          const triggerOffset = 180;
+          let currentTab = 'About';
+
+          for (const link of navLinks) {
+            const section = document.getElementById(link.id);
+            if (section) {
+              const sectionTop = section.offsetTop - triggerOffset;
+              const sectionHeight = section.offsetHeight;
+              if (scrollY >= sectionTop && scrollY < sectionTop + sectionHeight) {
+                currentTab = link.label;
+                break;
+              }
+            }
+          }
+          setActiveTab(currentTab);
+        };
+
+        window.addEventListener('scroll', handleScroll, { passive: true });
+        handleScroll();
+        return () => window.removeEventListener('scroll', handleScroll);
+      }, []);
+
+      // Smooth Sliding Underline Position Calculation
+      const updateIndicator = () => {
+        if (!navRef.current) return;
+        const activeLinkEl = navRef.current.querySelector(`[data-tab="${activeTab}"]`);
+        if (activeLinkEl) {
+          setIndicatorStyle({
+            left: activeLinkEl.offsetLeft,
+            width: activeLinkEl.offsetWidth,
+            opacity: 1
+          });
+        }
+      };
+
+      useEffect(() => {
+        updateIndicator();
+        window.addEventListener('resize', updateIndicator);
+        return () => window.removeEventListener('resize', updateIndicator);
+      }, [activeTab]);
+
+      return (
+        <header className="fixed top-3 sm:top-4 inset-x-0 z-50 flex justify-center px-3 sm:px-6 pointer-events-none">
+          <div className="pointer-events-auto w-full max-w-[1140px] navbar-pill-themed rounded-full px-4 sm:px-6 py-2 sm:py-2.5 flex items-center justify-between">
+            
+            {/* Left Brand: Glowing Cyan Pulse Dot + Name */}
+            <a href="#hero" className="flex items-center gap-2.5 group shrink-0">
+              <span className="relative flex h-2.5 w-2.5 shrink-0">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#00A3E0] opacity-75"></span>
+                <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-[#007BB8] shadow-[0_0_8px_#00C8FF]"></span>
+              </span>
+              <span className="font-headline font-bold text-brand-textPrimary text-sm sm:text-[15px] tracking-tight group-hover:text-brand-accent transition-colors whitespace-nowrap">
+                Karan Bhoi
+              </span>
+            </a>
+
+            {/* Center Desktop Navigation Links with Smooth Moving Underline */}
+            <nav ref={navRef} className="hidden lg:flex items-center gap-6 xl:gap-8 font-medium text-sm relative py-1">
+              {navLinks.map((link) => {
+                const isActive = activeTab === link.label;
+                return (
+                  <a
+                    key={link.label}
+                    data-tab={link.label}
+                    href={link.href}
+                    onClick={() => setActiveTab(link.label)}
+                    className={`relative py-1 transition-colors duration-200 ${
+                      isActive
+                        ? 'text-[#007BB8] font-bold drop-shadow-[0_0_8px_rgba(0,123,184,0.25)]'
+                        : 'text-[#2C4A63] hover:text-[#007BB8]'
+                    }`}
+                  >
+                    {link.label}
+                  </a>
+                );
+              })}
+
+              {/* Smooth Gliding Moving Line */}
+              <span
+                className="absolute bottom-0 h-[2.5px] bg-[#007BB8] rounded-full transition-all duration-300 ease-out pointer-events-none shadow-[0_0_8px_rgba(0,123,184,0.45)]"
+                style={{
+                  left: `${indicatorStyle.left}px`,
+                  width: `${indicatorStyle.width}px`,
+                  opacity: indicatorStyle.opacity
+                }}
+              />
+            </nav>
+
+            {/* Right Side Actions: Circular Social Icons + Download Resume Pill Button */}
+            <div className="hidden sm:flex items-center gap-2.5 shrink-0">
+              {/* Email Circular Button */}
+              <a
+                href="mailto:karanbhoi1441@gmail.com"
+                title="Send Email"
+                className="w-9 h-9 rounded-full border border-white/80 bg-white/50 hover:bg-white/90 hover:border-[#00A3E0]/40 text-[#2C4A63] hover:text-[#007BB8] flex items-center justify-center transition-all shadow-[0_2px_6px_rgba(0,90,140,0.06)] hover:scale-105 hover:shadow-[0_0_12px_rgba(0,195,255,0.35)]"
+              >
+                <span className="material-symbols-outlined text-[17px]">mail</span>
+              </a>
+
+              {/* GitHub Circular Button */}
+              <a
+                href="https://github.com/karanxai"
+                target="_blank"
+                rel="noopener noreferrer"
+                title="GitHub @karanxai"
+                className="w-9 h-9 rounded-full border border-white/80 bg-white/50 hover:bg-white/90 hover:border-[#00A3E0]/40 text-[#2C4A63] hover:text-[#007BB8] flex items-center justify-center transition-all shadow-[0_2px_6px_rgba(0,90,140,0.06)] hover:scale-105 hover:shadow-[0_0_12px_rgba(0,195,255,0.35)]"
+              >
+                <svg className="w-4 h-4 fill-current" viewBox="0 0 24 24">
+                  <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/>
+                </svg>
+              </a>
+
+              {/* LinkedIn Circular Button */}
+              <a
+                href="https://www.linkedin.com/in/karanbhoi2005"
+                target="_blank"
+                rel="noopener noreferrer"
+                title="LinkedIn Profile"
+                className="w-9 h-9 rounded-full border border-white/80 bg-white/50 hover:bg-white/90 hover:border-[#00A3E0]/40 text-[#2C4A63] hover:text-[#007BB8] flex items-center justify-center transition-all shadow-[0_2px_6px_rgba(0,90,140,0.06)] hover:scale-105 hover:shadow-[0_0_12px_rgba(0,195,255,0.35)]"
+              >
+                <svg className="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24">
+                  <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
+                </svg>
+              </a>
+
+              {/* Download Resume Button with Harmonized Ocean Cyan/Azure Gradient */}
+              <a
+                href="#journey"
+                className="inline-flex items-center gap-1.5 px-4 sm:px-5 py-2 rounded-full text-xs sm:text-sm font-semibold text-white bg-gradient-to-r from-[#007BB8] via-[#008ECB] to-[#00A3E0] hover:from-[#006EA6] hover:to-[#0092CA] shadow-[0_4px_16px_rgba(0,123,184,0.3)] hover:shadow-[0_6px_22px_rgba(0,163,224,0.45)] hover:scale-[1.02] active:scale-[0.98] transition-all"
+              >
+                <span>Download Resume</span>
+                <span className="material-symbols-outlined text-[16px]">download</span>
+              </a>
+            </div>
+
+            {/* Mobile Hamburger Button */}
+            <button
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              className="lg:hidden p-1.5 rounded-full bg-white/60 border border-white/80 text-brand-textPrimary hover:bg-white transition-colors shadow-sm"
+              aria-label="Toggle Navigation Menu"
+            >
+              <span className="material-symbols-outlined text-[22px]">
+                {mobileMenuOpen ? 'close' : 'menu'}
+              </span>
+            </button>
+          </div>
+
+          {/* Mobile Drawer */}
+          {mobileMenuOpen && (
+            <div className="pointer-events-auto absolute top-14 inset-x-3 sm:inset-x-4 max-h-[calc(100vh-80px)] overflow-y-auto bg-[#B9F0FF]/95 backdrop-blur-2xl border border-white/80 p-5 rounded-3xl shadow-[0_16px_40px_rgba(0,90,140,0.18)] flex flex-col gap-3">
+              {navLinks.map((link) => (
+                <a
+                  key={link.label}
+                  href={link.href}
+                  onClick={() => {
+                    setActiveTab(link.label);
+                    setMobileMenuOpen(false);
+                  }}
+                  className={`text-sm font-semibold py-1.5 flex items-center justify-between ${
+                    activeTab === link.label ? 'text-[#007BB8]' : 'text-brand-textPrimary hover:text-[#007BB8]'
+                  }`}
+                >
+                  <span>{link.label}</span>
+                  <span className="material-symbols-outlined text-[16px] text-slate-400">chevron_right</span>
+                </a>
+              ))}
+              <div className="pt-3 border-t border-sky-200/60 flex items-center justify-between gap-2">
+                <div className="flex items-center gap-2">
+                  <a href="mailto:karanbhoi1441@gmail.com" className="w-8 h-8 rounded-full border border-white/80 bg-white/70 flex items-center justify-center text-slate-700">
+                    <span className="material-symbols-outlined text-[16px]">mail</span>
+                  </a>
+                  <a href="https://github.com/karanxai" target="_blank" rel="noopener noreferrer" className="w-8 h-8 rounded-full border border-white/80 bg-white/70 flex items-center justify-center text-slate-700">
+                    <svg className="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+                  </a>
+                </div>
+                <a
+                  href="#journey"
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="px-4 py-2 rounded-full text-xs font-semibold text-white bg-gradient-to-r from-[#007BB8] to-[#00A3E0]"
+                >
+                  Download Resume
+                </a>
+              </div>
+            </div>
+          )}
+        </header>
+      );
+    }
+
+    // ==========================================
+    // 3. HERO COMPONENT WITH IMAGE SIDE GLOW
+    // ==========================================
+    function HeroSection() {
+      const [copied, setCopied] = useState(false);
+
+      const copyEmail = () => {
+        navigator.clipboard.writeText('karanbhoi1441@gmail.com');
+        setCopied(true);
+        setTimeout(() => setCopied(false), 2400);
+      };
+
+      return (
+        <section id="hero" className="pt-24 sm:pt-28 md:pt-36 pb-14 sm:pb-16 md:pb-24">
+          <div className="max-w-[1240px] mx-auto px-4 sm:px-6 md:px-8">
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-8 items-center">
+              
+              {/* Left Column: Pitch & Profile Details */}
+              <div className="lg:col-span-7 flex flex-col items-start z-10">
+                <div className="pill-badge mb-6 shadow-sm bg-white/80 border-[#0090d0]/30 text-[#005a88]">
+                  <span className="relative flex h-2.5 w-2.5">
+                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-500 opacity-75"></span>
+                    <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-600"></span>
+                  </span>
+                  <span>Available for Freelance & AI / Full-Stack Roles</span>
+                </div>
+
+                <h1 className="font-headline text-2xl sm:text-4xl md:text-5xl lg:text-[54px] font-extrabold text-brand-textPrimary tracking-tight leading-[1.14] mb-4">
+                  Hi, I'm <span className="text-[#006ba1] drop-shadow-sm">Karan Bhoi</span>.<br />
+                  Building Intelligent Web Solutions & AI Systems.
+                </h1>
+
+                <p className="font-body text-lg sm:text-xl text-brand-textSecondary font-medium mb-5">
+                  Web Solutions & AI Engineer • AI Full-Stack Developer
+                </p>
+
+                <p className="font-body text-base md:text-lg text-brand-textSecondary max-w-2xl mb-8 leading-relaxed">
+                  Software/AI Engineer with a <strong className="text-brand-textPrimary font-semibold">BS in Computer Science (8.48 CGPA)</strong>.
+                  I design high-impact web applications, automated business dashboards, and custom RAG AI pipelines engineered for speed and reliability.
+                </p>
+
+                {/* Row 1: Primary Action Buttons */}
+                <div className="flex flex-wrap items-center gap-3 sm:gap-3.5 mb-3.5 w-full sm:w-auto">
+                  <a
+                    href="#contact"
+                    className="px-5 sm:px-6 py-3 rounded-2xl font-headline font-bold text-sm text-white bg-gradient-to-r from-[#006ca3] via-[#0082be] to-[#009fd6] shadow-[0_6px_20px_rgba(0,110,175,0.32)] hover:shadow-[0_8px_25px_rgba(0,130,200,0.45)] hover:-translate-y-0.5 active:translate-y-0 transition-all flex items-center gap-2 group"
+                  >
+                    <span>Start a Project</span>
+                    <span className="material-symbols-outlined text-[18px] group-hover:translate-x-1 transition-transform">arrow_forward</span>
+                  </a>
+
+                  <a
+                    href="#services"
+                    className="px-5 sm:px-6 py-3 rounded-2xl font-headline font-semibold text-sm text-[#081827] hover:text-[#007BB8] bg-white/90 backdrop-blur-sm border border-[#BCE7F5] hover:border-[#00A3E0] shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all"
+                  >
+                    <span>Explore Services</span>
+                  </a>
+
+                  <a
+                    href="#projects"
+                    className="px-5 sm:px-6 py-3 rounded-2xl font-headline font-semibold text-sm text-[#081827] hover:text-[#007BB8] bg-white/90 backdrop-blur-sm border border-[#BCE7F5] hover:border-[#00A3E0] shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all"
+                  >
+                    <span>View Projects</span>
+                  </a>
+                </div>
+
+                {/* Row 2: View Resume Button */}
+                <div className="mb-4">
+                  <a
+                    href="#journey"
+                    className="px-5 py-2.5 rounded-2xl font-headline font-semibold text-sm text-[#081827] hover:text-[#007BB8] bg-white/90 backdrop-blur-sm border border-[#BCE7F5] hover:border-[#00A3E0] shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all inline-flex items-center gap-2.5 group"
+                  >
+                    <svg className="w-4 h-4 text-[#007BB8] group-hover:scale-110 transition-transform" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                      <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+                      <polyline points="14 2 14 8 20 8" />
+                      <line x1="16" y1="13" x2="8" y2="13" />
+                      <line x1="16" y1="17" x2="8" y2="17" />
+                    </svg>
+                    <span>View Resume</span>
+                  </a>
+                </div>
+
+                {/* Row 3: Social & Contact Badges with Karan's verified details */}
+                <div className="flex flex-wrap items-center gap-2.5 pt-1">
+                  <button
+                    onClick={copyEmail}
+                    className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/90 backdrop-blur-sm border border-[#BCE7F5] hover:border-[#00A3E0] hover:bg-white text-xs sm:text-sm font-medium text-[#081827] hover:text-[#007BB8] shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all group cursor-pointer"
+                    title="Click to copy email"
+                  >
+                    <svg className="w-4 h-4 text-[#007BB8] group-hover:scale-110 transition-transform flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                      <rect x="3" y="5" width="18" height="14" rx="2" />
+                      <polyline points="3 7 12 13 21 7" />
+                    </svg>
+                    <span>{copied ? 'Copied to Clipboard!' : 'karanbhoi1441@gmail.com'}</span>
+                  </button>
+
+                  <a
+                    href="https://github.com/karanxai"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/90 backdrop-blur-sm border border-[#BCE7F5] hover:border-[#00A3E0] hover:bg-white text-xs sm:text-sm font-medium text-[#081827] hover:text-[#007BB8] shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all group"
+                  >
+                    <svg className="w-4 h-4 fill-[#081827] group-hover:fill-[#007BB8] transition-colors flex-shrink-0" viewBox="0 0 24 24">
+                      <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z" />
+                    </svg>
+                    <span>github.com/karanxai</span>
+                  </a>
+
+                  <a
+                    href="https://www.linkedin.com/in/karanbhoi2005"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/90 backdrop-blur-sm border border-[#BCE7F5] hover:border-[#00A3E0] hover:bg-white text-xs sm:text-sm font-medium text-[#081827] hover:text-[#007BB8] shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all group"
+                  >
+                    <svg className="w-4 h-4 fill-[#0077B5] group-hover:scale-110 transition-transform flex-shrink-0" viewBox="0 0 24 24">
+                      <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
+                    </svg>
+                    <span>in/karanbhoi2005</span>
+                  </a>
+                </div>
+              </div>              {/* Right Column: Clean Portrait Photo directly edge-to-edge */}
+              <div className="lg:col-span-5 flex justify-center items-center relative">
+                <div className="relative w-full max-w-[400px] rounded-3xl overflow-hidden aspect-[4/5] bg-slate-100 shadow-[0_12px_35px_-5px_rgba(0,60,110,0.12)] group border border-slate-200/60 cursor-pointer">
+                  <img
+                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuDTsxhsd5u_9swoBQEqfTXfClyCxEonbKNw5Zt0Cp1Ec75gf_BgryOxxAX8Lgj1SshgFmpYEbndJY13UKNZcPMlZ0cTLfU4Ya8y7cRuWElrvhesi3XvuHSB4zARZ4aFIvZgRrQs0zTsxt1Uo7vSpcj5vHPlhuFFFnuDkALaMCnXOIef-IKeIQsBvoPdY4fRyP9CGpz54A9zzqHNKc56nlRuvpJesfzGahJ33WiE-mbp5WRz7JP6MM3y"
+                    alt="Karan Bhoi - Web Solutions & AI Engineer"
+                    className="w-full h-full object-cover object-top filter brightness-[1.01] contrast-[1.02] group-hover:scale-[1.065] transition-transform duration-700 ease-out will-change-transform"
+                  />
+
+                  {/* Reference Bottom Identity Box: White pill card with Name, Role & Red Glowing Pulse Dot */}
+                  <div className="absolute bottom-3.5 inset-x-3.5 p-3.5 sm:p-4 rounded-2xl bg-white/95 backdrop-blur-md border border-slate-100/90 shadow-[0_8px_25px_rgba(0,30,60,0.12)] flex items-center justify-between gap-3 z-20">
+                    <div className="flex flex-col">
+                      <span className="font-headline font-extrabold text-slate-900 text-base sm:text-lg tracking-tight leading-none">
+                        Karan Bhoi
+                      </span>
+                      <span className="font-code text-[11px] sm:text-xs font-semibold text-[#D81B60] tracking-wide mt-1.5 leading-none">
+                        Web Solutions & AI Engineer
+                      </span>
+                    </div>
+                    <div className="relative flex items-center justify-center shrink-0 pr-1">
+                      <span className="animate-ping absolute inline-flex h-2.5 w-2.5 rounded-full bg-[#FF2D55] opacity-75"></span>
+                      <span className="relative inline-flex rounded-full h-3 w-3 bg-[#FF2D55] shadow-[0_0_10px_#FF2D55]"></span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+
+            {/* Quick Metrics Strip */}
+            <div className="mt-12 sm:mt-16 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
+              <div className="glass-card p-5 rounded-2xl">
+                <div className="font-headline text-3xl font-extrabold text-[#006090]">8.48</div>
+                <div className="font-headline text-sm font-bold text-brand-textPrimary mt-1">BS in Computer Science</div>
+                <div className="font-code text-xs text-brand-textMuted mt-0.5">Top-Tier Academic Track</div>
+              </div>
+
+              <div className="glass-card p-5 rounded-2xl">
+                <div className="font-headline text-3xl font-extrabold text-[#006090]">Full-Stack</div>
+                <div className="font-headline text-sm font-bold text-brand-textPrimary mt-1">Modern Web & APIs</div>
+                <div className="font-code text-xs text-brand-textMuted mt-0.5">React, Next.js & FastAPI</div>
+              </div>
+
+              <div className="glass-card p-5 rounded-2xl">
+                <div className="font-headline text-3xl font-extrabold text-[#006090]">GenAI / RAG</div>
+                <div className="font-headline text-sm font-bold text-brand-textPrimary mt-1">LLM Applications</div>
+                <div className="font-code text-xs text-brand-textMuted mt-0.5">FAISS, LLaMA & Groq LPU</div>
+              </div>
+
+              <div className="glass-card p-5 rounded-2xl">
+                <div className="font-headline text-3xl font-extrabold text-[#006090]">100%</div>
+                <div className="font-headline text-sm font-bold text-brand-textPrimary mt-1">Direct Handover</div>
+                <div className="font-code text-xs text-brand-textMuted mt-0.5">Full Code Ownership</div>
+              </div>
+            </div>
+
+          </div>
+        </section>
+      );
+    }
+
+    // ==========================================
+    // 4. SERVICES & SOLUTIONS SECTION
+    // ==========================================
+    function ServicesSection() {
+      const services = [
+        {
+          code: 'FULL-STACK',
+          title: 'Custom Web Applications',
+          desc: 'Crafting responsive, lightning-fast web solutions with sleek modern user experience, secure cloud databases, and robust REST APIs.',
+          renderIcon: () => (
+            <svg className="w-5 h-5 transition-colors" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <rect x="3" y="3" width="18" height="18" rx="2" />
+              <line x1="9" y1="3" x2="9" y2="21" />
+              <line x1="14" y1="8" x2="19" y2="8" />
+              <line x1="14" y1="12" x2="17" y2="12" />
+            </svg>
+          ),
+          features: [
+            'React.js & Next.js Modern Frontends',
+            'Python & FastAPI Asynchronous Backends',
+            'Supabase / PostgreSQL Cloud Databases',
+            'Tailwind CSS & Mobile-First Architecture'
+          ],
+          tags: ['React.js', 'FastAPI', 'Supabase', 'REST APIs']
+        },
+        {
+          code: 'AI-POWERED',
+          title: 'AI & Smart Automations',
+          desc: 'Infusing state-of-the-art Large Language Models and semantic retrieval algorithms into operational workflows to eliminate repetitive labor.',
+          renderIcon: () => (
+            <svg className="w-5 h-5 transition-colors" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <circle cx="12" cy="12" r="3" />
+              <path d="M12 2v3m0 14v3M2 12h3m14 0h3" />
+              <path d="m4.93 4.93 2.12 2.12m9.9 9.9 2.12 2.12M4.93 19.07l2.12-2.12m9.9-9.9 2.12-2.12" />
+            </svg>
+          ),
+          features: [
+            'RAG Systems & FAISS Vector Search Pipelines',
+            'Groq Cloud LPU & OpenAI Model Integrations',
+            'Intelligent Domain Chatbots & Doc Query',
+            'Automated Data Cleaning & Insight Extraction'
+          ],
+          tags: ['RAG / FAISS', 'Groq LPU', 'LLaMA 3', 'LangChain']
+        },
+        {
+          code: 'ANALYTICS & BI',
+          title: 'Automated Dashboards & BI',
+          desc: 'Transforming messy spreadsheets and database tables into real-time business intelligence dashboards with actionable forecasting.',
+          renderIcon: () => (
+            <svg className="w-5 h-5 transition-colors" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <polyline points="22 7 13.5 15.5 8.5 10.5 2 17" />
+              <polyline points="16 7 22 7 22 13" />
+              <circle cx="8.5" cy="10.5" r="1.5" fill="currentColor" />
+            </svg>
+          ),
+          features: [
+            'Interactive Power BI & Excel Models',
+            'Exploratory Data Analysis (EDA) in Pandas',
+            'Automated Weekly / Monthly Performance Metrics',
+            'Interactive Plotly & React Chart Integrations'
+          ],
+          tags: ['Power BI', 'EDA', 'Pandas', 'Plotly Charts']
+        }
+      ];
+
+      return (
+        <section id="services" className="py-20 border-t border-[#0090d0]/25 relative overflow-hidden">
+          {/* Decorative background constellations matching Image 2 */}
+          <div className="absolute top-8 left-2 w-64 h-64 pointer-events-none opacity-40 -z-10 hidden lg:block">
+            <svg viewBox="0 0 260 260" className="w-full h-full text-[#009fd6]" stroke="currentColor" strokeWidth="1" strokeDasharray="3 3" fill="none">
+              <line x1="30" y1="40" x2="100" y2="80" />
+              <line x1="100" y1="80" x2="140" y2="30" />
+              <line x1="100" y1="80" x2="70" y2="170" />
+              <line x1="70" y1="170" x2="170" y2="190" />
+              <line x1="170" y1="190" x2="230" y2="130" />
+              <circle cx="30" cy="40" r="3" fill="#009fd6" />
+              <circle cx="100" cy="80" r="3.5" fill="#009fd6" />
+              <circle cx="140" cy="30" r="2.5" fill="#009fd6" />
+              <circle cx="70" cy="170" r="3" fill="#009fd6" />
+              <circle cx="170" cy="190" r="3.5" fill="#009fd6" />
+              <circle cx="230" cy="130" r="2.5" fill="#009fd6" />
+            </svg>
+          </div>
+          <div className="absolute bottom-6 right-2 w-64 h-64 pointer-events-none opacity-40 -z-10 hidden lg:block">
+            <svg viewBox="0 0 260 260" className="w-full h-full text-[#009fd6]" stroke="currentColor" strokeWidth="1" strokeDasharray="3 3" fill="none">
+              <line x1="230" y1="60" x2="160" y2="100" />
+              <line x1="160" y1="100" x2="130" y2="190" />
+              <line x1="160" y1="100" x2="200" y2="210" />
+              <line x1="130" y1="190" x2="50" y2="170" />
+              <circle cx="230" cy="60" r="3" fill="#009fd6" />
+              <circle cx="160" cy="100" r="3.5" fill="#009fd6" />
+              <circle cx="130" cy="190" r="2.5" fill="#009fd6" />
+              <circle cx="200" cy="210" r="3" fill="#009fd6" />
+              <circle cx="50" cy="170" r="3" fill="#009fd6" />
+            </svg>
+          </div>
+
+          <div className="max-w-[1240px] mx-auto px-4 sm:px-6 md:px-8">
+            <div className="flex flex-col mb-10">
+              {/* High-tech pill badge matching Image 2 */}
+              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-[#0090d0]/40 bg-[#d8f5ff]/85 backdrop-blur-sm shadow-sm mb-3.5 w-fit">
+                <div className="flex items-center gap-1.5 font-code text-xs font-bold text-[#007bb8] tracking-wider">
+                  <svg className="w-3.5 h-3.5 text-[#007bb8]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+                    <circle cx="12" cy="12" r="3" />
+                    <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z" />
+                  </svg>
+                  <span>MISCELLANEOUS_SERVICES</span>
+                </div>
+                <span className="px-2 py-0.5 rounded-full bg-[#00a3e0]/15 text-[#006894] font-code text-[10px] font-bold tracking-wider uppercase">
+                  Offerings & Capabilities
+                </span>
+              </div>
+
+              <h2 className="font-headline text-3xl sm:text-4xl font-extrabold text-[#071828] tracking-tight">
+                Web-Based Solutions I Can Build For You
+              </h2>
+              <p className="font-body text-base md:text-[17px] text-[#2C4A63] mt-2 max-w-2xl leading-relaxed">
+                From scalable SaaS frontends to enterprise-grade RAG AI engines, I deliver production software built with precision.
+              </p>
+            </div>
+
+            {/* 3 Cards Grid */}
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {services.map((srv, idx) => (
+                <div
+                  key={idx}
+                  className="bg-white/95 backdrop-blur-md rounded-[22px] border border-[#BCE7F5] p-7 sm:p-8 flex flex-col justify-between shadow-[0_8px_30px_rgba(0,100,160,0.06)] hover:shadow-[0_20px_45px_-12px_rgba(0,130,210,0.22),0_0_25px_rgba(0,195,255,0.18)] hover:border-[#00A3E0]/70 hover:-translate-y-1.5 transition-all duration-300 group relative overflow-hidden"
+                >
+                  {/* Subtle top-right corner glow on hover */}
+                  <div className="absolute top-0 right-0 w-36 h-36 bg-gradient-to-bl from-[#00C8FF]/15 via-transparent to-transparent rounded-tr-[22px] pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+
+                  <div>
+                    {/* Card Top: Logo on the LEFT, Name / Tag with curved border line on the RIGHT */}
+                    <div className="flex items-center justify-between mb-4">
+                      {/* Logo is on the left side */}
+                      <div className="w-10 h-10 rounded-xl bg-[#E2F6FD] text-[#008ecb] border border-[#BCE7F5]/80 flex items-center justify-center group-hover:bg-[#009FD6] group-hover:text-white group-hover:border-[#009FD6] group-hover:scale-105 transition-all duration-300 shadow-sm">
+                        {srv.renderIcon()}
+                      </div>
+                      {/* Name / Category title with curved border line on the right side */}
+                      <span className="font-code text-xs text-[#007BB8] font-bold tracking-wider px-3 py-1 rounded-full border border-[#0090d0]/35 bg-[#e0f6ff]/70 shadow-sm">
+                        {srv.code}
+                      </span>
+                    </div>
+
+                    <h3 className="font-headline text-xl sm:text-[22px] font-bold text-[#081827] mb-2.5 tracking-tight group-hover:text-[#005a88] transition-colors">
+                      {srv.title}
+                    </h3>
+                    <p className="font-body text-[#3B5B73] text-[13.5px] leading-relaxed mb-6">
+                      {srv.desc}
+                    </p>
+                  </div>
+
+                  {/* Tags in clean outline badges */}
+                  <div className="flex flex-wrap gap-2 pt-3 border-t border-[#BCE7F5]/50 mt-auto">
+                    {srv.tags.map((t, tIdx) => (
+                      <span
+                        key={tIdx}
+                        className="px-2.5 py-1 rounded-[6px] text-[11.5px] font-code font-semibold text-[#006994] border border-[#BDE7F4] bg-[#F4FCFF] hover:border-[#009FD6] hover:bg-[#E2F6FD] hover:text-[#004e70] transition-colors cursor-default"
+                      >
+                        {t}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            {/* Bottom Callout Banner matching the system and color palette */}
+            <div className="mt-8 bg-white/95 backdrop-blur-md rounded-[22px] border border-[#BCE7F5] p-6 sm:p-7 flex flex-col md:flex-row md:items-center justify-between gap-5 shadow-[0_8px_30px_rgba(0,100,160,0.06)] hover:border-[#00A3E0]/60 transition-all duration-300">
+              <div>
+                <h4 className="font-headline text-lg sm:text-xl font-bold text-[#081827]">
+                  Have a project idea or need a web solution?
+                </h4>
+                <p className="font-body text-[#3B5B73] text-sm mt-1">
+                  Feel free to reach out to discuss your requirements — I'm happy to help build it.
+                </p>
+              </div>
+              <div className="flex flex-wrap items-center gap-3">
+                <a
+                  href="#contact"
+                  className="px-5 py-2.5 rounded-xl bg-gradient-to-r from-[#007BB8] to-[#005F91] text-white font-headline text-sm font-semibold flex items-center gap-2 shadow-[0_4px_14px_rgba(0,123,184,0.3)] hover:shadow-[0_6px_20px_rgba(0,123,184,0.45)] hover:-translate-y-0.5 transition-all duration-200"
+                >
+                  <span>Discuss Your Project</span>
+                  <span className="material-symbols-outlined text-[16px]">arrow_forward</span>
+                </a>
+                <a
+                  href="https://wa.me/919607242403?text=Hi%20Karan,%20I%20have%20a%20project%20idea%20and%20would%20like%20to%20discuss%20it."
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="px-4 py-2.5 rounded-xl border border-emerald-500/30 bg-emerald-500/10 text-emerald-800 font-headline text-sm font-semibold flex items-center gap-2 hover:bg-emerald-500/20 hover:border-emerald-500/50 hover:-translate-y-0.5 transition-all duration-200"
+                >
+                  <svg className="w-4 h-4 fill-emerald-600" viewBox="0 0 24 24">
+                    <path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.911.928 3.145.929 3.178 0 5.767-2.587 5.768-5.766.001-3.187-2.575-5.77-5.771zm3.392 8.244c-.144.405-.837.774-1.17.824-.299.045-.677.063-1.092-.069-.252-.08-.575-.187-.988-.365-1.739-.751-2.874-2.502-2.961-2.617-.087-.116-.708-.94-.708-1.793s.448-1.273.607-1.446c.159-.173.346-.217.462-.217l.332.007c.106.005.249-.04.39.299.144.35.49 1.199.534 1.286.044.087.073.189.014.305-.058.116-.087.189-.173.289l-.26.302c-.087.101-.177.21-.077.382.101.173.447.737.96 1.194.66.588 1.217.77 1.39.856.173.087.275.072.376-.043.101-.116.433-.506.549-.68.116-.173.231-.144.39-.087s1.011.477 1.184.564.289.13.332.202c.045.072.045.419-.1.824z" />
+                  </svg>
+                  <span>WhatsApp Chat</span>
+                </a>
+              </div>
+            </div>
+          </div>
+        </section>
+      );
+    }
+
+    // ==========================================
+    // 6. PROJECTS SECTION
+    // ==========================================
+    function ProjectsSection() {
+      const projects = [
+        {
+          id: 'asklytix',
+          category: 'AI & Data',
+          tag: 'Live Production',
+          title: 'Asklytix – AI Data Analyst',
+          desc: 'Interactive intelligent data analysis platform. Features automated 5-step data cleaning, high-speed Groq Cloud LPU engine for instant statistical insights, React 19 frontend with Plotly visualizations, and Supabase cloud storage.',
+          tech: ['FastAPI', 'React 19', 'Groq LPU', 'Supabase', 'Plotly'],
+          liveUrl: 'https://asklytix.netlify.app/',
+          codeUrl: 'https://github.com/karanxai',
+          featured: true
+        },
+        {
+          id: 'documind',
+          category: 'GenAI & RAG',
+          tag: 'Semantic RAG',
+          title: 'Documind – Semantic RAG Engine',
+          desc: 'Enterprise document question-answering architecture using FAISS vector embeddings and LLaMA LLM for contextual citations. Built with an asynchronous FastAPI engine and interactive React UI for instant PDF retrieval.',
+          tech: ['RAG', 'FAISS', 'LLaMA LLM', 'FastAPI', 'React'],
+          liveUrl: 'https://github.com/karanxai',
+          codeUrl: 'https://github.com/karanxai',
+          featured: true
+        },
+
+        {
+          id: 'zomato-bi',
+          category: 'Data Analytics',
+          tag: 'BI Telemetry',
+          title: 'Zomato Delivery Analysis Dashboard',
+          desc: 'Interactive Power BI dashboard analyzing Zomato sales, orders, customer ratings, and city-wise performance. Features DAX calculations, Power Query data transformation, KPI tracking, and Top-N analysis to identify business trends and performance insights.',
+          tech: ['Power BI', 'MS Excel', 'DAX', 'Power Query'],
+          liveUrl: 'https://github.com/karanxai',
+          codeUrl: 'https://github.com/karanxai',
+          featured: false
+        }
+      ];
+
+      return (
+        <section id="projects" className="py-20 border-t border-[#0090d0]/25">
+          <div className="max-w-[1240px] mx-auto px-4 sm:px-6 md:px-8">
+            <div className="flex flex-col mb-10">
+              <div className="pill-badge mb-3 w-fit">
+                <span className="material-symbols-outlined text-[16px]">terminal</span>
+                <span>Featured Work</span>
+              </div>
+              <h2 className="font-headline text-3xl sm:text-4xl font-extrabold text-brand-textPrimary">
+                Engineered with Precision & Intelligence
+              </h2>
+              <p className="font-body text-base md:text-lg text-brand-textSecondary mt-2">
+                Showcase of practical AI engines, RAG pipelines, and full-stack solutions.
+              </p>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {projects.map((proj) => (
+                <div key={proj.id} className="glass-card rounded-3xl overflow-hidden flex flex-col justify-between group">
+                  <div className="p-6 sm:p-8">
+                    <div className="flex items-center justify-between mb-4">
+                      <span className="font-code text-xs text-brand-textMuted uppercase font-bold tracking-wider">
+                        {proj.category}
+                      </span>
+                      <span className="px-3 py-1 rounded-full text-xs font-semibold bg-[#008ecb]/15 text-[#005a88] border border-[#008ecb]/30">
+                        {proj.tag}
+                      </span>
+                    </div>
+
+                    <h3 className="font-headline text-2xl font-bold text-brand-textPrimary mb-3 group-hover:text-brand-accent transition-colors">
+                      {proj.title}
+                    </h3>
+                    <p className="font-body text-sm sm:text-base text-brand-textSecondary leading-relaxed mb-6">
+                      {proj.desc}
+                    </p>
+
+                    <div className="flex flex-wrap gap-2 mb-6">
+                      {proj.tech.map((t, idx) => (
+                        <span
+                          key={idx}
+                          className="px-2.5 py-1 rounded-lg text-xs font-code bg-white/80 border border-slate-200 text-brand-textSecondary"
+                        >
+                          {t}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+
+                  <div className="p-6 sm:p-8 pt-0 flex items-center justify-between border-t border-slate-200/70 mt-auto">
+                    {proj.liveUrl.startsWith('http') && !proj.liveUrl.includes('github') ? (
+                      <a
+                        href={proj.liveUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center gap-1.5 font-semibold text-sm text-[#006ba1] hover:text-[#004e76] transition-colors"
+                      >
+                        <span className="material-symbols-outlined text-[18px]">launch</span>
+                        <span>Open Live App</span>
+                      </a>
+                    ) : (
+                      <a
+                        href={proj.codeUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center gap-1.5 font-semibold text-sm text-[#006ba1] hover:text-[#004e76] transition-colors"
+                      >
+                        <span className="material-symbols-outlined text-[18px]">code</span>
+                        <span>View Architecture</span>
+                      </a>
+                    )}
+
+                    <a
+                      href={proj.codeUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-1 text-xs font-code text-brand-textMuted hover:text-brand-accent transition-colors"
+                    >
+                      <span>github.com</span>
+                      <span className="material-symbols-outlined text-[14px]">arrow_outward</span>
+                    </a>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+      );
+    }
+
+    // ==========================================
+    // 6. WORK PROCESS & CLIENT ASSURANCE SECTION
+    // ==========================================
+    function ProcessSection() {
+      const processSteps = [
+        {
+          num: '01',
+          step: 'Step 1',
+          title: 'Requirements & Planning',
+          desc: 'We discuss your idea, what pages or features you need, and any preferences. I outline the plan and choose the right tools for your requirements.',
+          highlight: 'Clear Goals & Timeline'
+        },
+        {
+          num: '02',
+          step: 'Step 2',
+          title: 'Building & Live Previews',
+          desc: 'I build your solution and share private preview links with you so you can test it directly in your browser and share feedback early.',
+          highlight: 'Regular Progress Updates'
+        },
+        {
+          num: '03',
+          step: 'Step 3',
+          title: 'Testing & Refinements',
+          desc: 'I verify that everything looks great on mobile, tablet, and desktop screens, check form responses, and ensure smooth loading speeds.',
+          highlight: 'Mobile & Speed Tested'
+        },
+        {
+          num: '04',
+          step: 'Step 4',
+          title: 'Deployment & Handover',
+          desc: 'I help you deploy your application live on the web (Vercel, Render, or custom domain) and hand over all source code and instructions.',
+          highlight: '100% Code Ownership'
+        }
+      ];
+
+      const assurances = [
+        {
+          icon: 'person',
+          title: 'Direct Communication',
+          desc: 'You work directly with me. Quick replies, honest feedback, and regular status check-ins.'
+        },
+        {
+          icon: 'grade',
+          title: 'AI & Web Development Skills',
+          desc: 'Strong foundation in React, FastAPI, Python, and practical AI/LLM tools to build modern solutions.'
+        },
+        {
+          icon: 'code',
+          title: 'Clean Code & Full Handover',
+          desc: 'All source code and assets are 100% yours with clean, understandable organization.'
+        },
+        {
+          icon: 'schedule',
+          title: 'Dedicated & Reliable',
+          desc: 'As a motivated developer, I dedicate my full attention to making sure your project is delivered properly.'
+        }
+      ];
+
+      return (
+        <section id="process" className="py-20 border-t border-[#0090d0]/25 relative overflow-hidden">
+          {/* Constellation decoration matching theme */}
+          <div className="absolute top-10 right-4 w-64 h-64 pointer-events-none opacity-35 -z-10 hidden lg:block">
+            <svg viewBox="0 0 260 260" className="w-full h-full text-[#009fd6]" stroke="currentColor" strokeWidth="1" strokeDasharray="3 3" fill="none">
+              <line x1="40" y1="50" x2="120" y2="90" />
+              <line x1="120" y1="90" x2="160" y2="40" />
+              <line x1="120" y1="90" x2="80" y2="180" />
+              <line x1="80" y1="180" x2="190" y2="200" />
+              <line x1="190" y1="200" x2="240" y2="140" />
+              <circle cx="40" cy="50" r="3" fill="#009fd6" />
+              <circle cx="120" cy="90" r="3.5" fill="#009fd6" />
+              <circle cx="160" cy="40" r="2.5" fill="#009fd6" />
+              <circle cx="80" cy="180" r="3" fill="#009fd6" />
+              <circle cx="190" cy="200" r="3.5" fill="#009fd6" />
+              <circle cx="240" cy="140" r="2.5" fill="#009fd6" />
+            </svg>
+          </div>
+
+          <div className="max-w-[1240px] mx-auto px-4 sm:px-6 md:px-8">
+            {/* Header */}
+            <div className="flex flex-col mb-12">
+              <div className="pill-badge mb-3 w-fit">
+                <span className="material-symbols-outlined text-[16px]">schedule</span>
+                <span>WORK PROCESS</span>
+              </div>
+              <h2 className="font-headline text-3xl sm:text-4xl font-extrabold text-[#071828] tracking-tight">
+                How I Work On Your Project
+              </h2>
+              <p className="font-body text-base md:text-[17px] text-[#2C4A63] mt-2 max-w-2xl leading-relaxed">
+                A straightforward, step-by-step process so you always know what&apos;s happening with your project.
+              </p>
+            </div>
+
+            {/* 4 Cards Grid */}
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+              {processSteps.map((step, idx) => (
+                <div
+                  key={idx}
+                  className="bg-white/95 backdrop-blur-md rounded-[24px] border border-[#BCE7F5] p-7 flex flex-col justify-between shadow-[0_8px_30px_rgba(0,100,160,0.06)] hover:shadow-[0_20px_45px_-12px_rgba(0,130,210,0.22),0_0_25px_rgba(0,195,255,0.18)] hover:border-[#00A3E0]/70 hover:-translate-y-1.5 transition-all duration-300 group relative overflow-hidden"
+                >
+                  {/* Subtle top-right corner glow on hover */}
+                  <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-bl from-[#00C8FF]/15 via-transparent to-transparent rounded-tr-[24px] pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+
+                  <div>
+                    {/* Top Row: 01 + Step Badge */}
+                    <div className="flex items-center justify-between mb-5">
+                      <span className="font-headline text-3xl sm:text-4xl font-extrabold text-[#007BB8] tracking-tight">
+                        {step.num}
+                      </span>
+                      <span className="px-3 py-1 rounded-full text-xs font-semibold bg-[#e8f7fd] text-[#007BB8] border border-[#0090d0]/25 font-code tracking-wide">
+                        {step.step}
+                      </span>
+                    </div>
+
+                    {/* Step Title */}
+                    <h3 className="font-headline text-lg sm:text-[19px] font-bold text-[#071828] group-hover:text-[#007BB8] transition-colors mb-3 leading-snug">
+                      {step.title}
+                    </h3>
+
+                    {/* Step Description */}
+                    <p className="font-body text-sm text-[#2C4A63] leading-relaxed mb-6">
+                      {step.desc}
+                    </p>
+                  </div>
+
+                  {/* Bottom Highlight Bullet */}
+                  <div className="pt-4 border-t border-[#0090d0]/15 flex items-center gap-2 text-xs sm:text-[13px] font-semibold text-[#007BB8]">
+                    <span className="material-symbols-outlined text-[17px] text-[#00A3E0] font-bold">check</span>
+                    <span>{step.highlight}</span>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            {/* Bottom Assurance Card */}
+            <div className="mt-8 bg-white/95 backdrop-blur-md rounded-[28px] border border-[#BCE7F5] p-7 sm:p-10 lg:p-12 shadow-[0_10px_35px_rgba(0,100,160,0.08)] hover:border-[#00A3E0]/50 transition-all duration-300 relative overflow-hidden">
+              {/* Subtle radiant background accent */}
+              <div className="absolute top-0 right-0 w-72 h-72 bg-gradient-to-bl from-[#00C8FF]/10 via-transparent to-transparent pointer-events-none" />
+
+              <div className="relative z-10 mb-8 sm:mb-10">
+                <div className="pill-badge mb-2.5 w-fit">
+                  <span className="material-symbols-outlined text-[15px]">verified_user</span>
+                  <span>CLIENT ASSURANCE</span>
+                </div>
+                <h3 className="font-headline text-2xl sm:text-3xl font-extrabold text-[#071828] tracking-tight">
+                  Why Work With Me
+                </h3>
+              </div>
+
+              <div className="relative z-10 grid grid-cols-1 md:grid-cols-2 gap-7 sm:gap-8 lg:gap-10">
+                {assurances.map((item, idx) => (
+                  <div key={idx} className="flex items-start gap-4 sm:gap-5 group">
+                    <div className="w-12 h-12 rounded-2xl bg-[#d8f5ff] border border-[#00a3e0]/30 text-[#007bb8] flex items-center justify-center shrink-0 shadow-sm group-hover:scale-105 group-hover:bg-[#007bb8] group-hover:text-white transition-all duration-300">
+                      <span className="material-symbols-outlined text-[22px]">{item.icon}</span>
+                    </div>
+                    <div>
+                      <h4 className="font-headline text-base sm:text-lg font-bold text-[#071828] group-hover:text-[#007BB8] transition-colors mb-1.5">
+                        {item.title}
+                      </h4>
+                      <p className="font-body text-sm text-[#2C4A63] leading-relaxed">
+                        {item.desc}
+                      </p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+          </div>
+        </section>
+      );
+    }
+
+    // ==========================================
+    // 7. JOURNEY & MILESTONES SECTION
+    // ==========================================
+    function JourneySection() {
+      return (
+        <section id="journey" className="py-20 border-t border-[#0090d0]/25">
+          <div className="max-w-[1240px] mx-auto px-4 sm:px-6 md:px-8">
+            <div className="flex flex-col mb-12">
+              <div className="pill-badge mb-3 w-fit">
+                <span className="material-symbols-outlined text-[16px]">school</span>
+                <span>Track Record</span>
+              </div>
+              <h2 className="font-headline text-3xl sm:text-4xl font-extrabold text-brand-textPrimary">
+                Academic Background & Experience
+              </h2>
+              <p className="font-body text-base md:text-lg text-brand-textSecondary mt-2 max-w-2xl">
+                Rigorous computer science foundation paired with industry practice and continuous AI R&D.
+              </p>
+            </div>
+
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
+              {/* Academic Column */}
+              <div>
+                <h3 className="font-headline text-xl font-bold text-brand-textPrimary mb-6 flex items-center gap-2">
+                  <span className="material-symbols-outlined text-brand-accent">school</span>
+                  <span>Academic Qualifications</span>
+                </h3>
+
+                <div className="space-y-6">
+                  <div className="glass-card p-6 rounded-2xl relative">
+                    <div className="flex items-center justify-between mb-2">
+                      <h4 className="font-headline font-bold text-lg text-brand-textPrimary">
+                        BS in Computer Science
+                      </h4>
+                      <span className="pill-badge bg-sky-500/15 border-sky-500/30 text-sky-800">
+                        CGPA: 8.48 / 10
+                      </span>
+                    </div>
+                    <div className="text-sm font-semibold text-brand-textSecondary mb-2">
+                      North Maharashtra University • Maharashtra, India
+                    </div>
+                    <p className="text-xs sm:text-sm text-brand-textMuted leading-relaxed">
+                      Core focus on Data Structures & Algorithms, Relational Database Management Systems (PostgreSQL/MySQL), and Software Engineering.
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              {/* Experience Column */}
+              <div>
+                <h3 className="font-headline text-xl font-bold text-brand-textPrimary mb-6 flex items-center gap-2">
+                  <span className="material-symbols-outlined text-brand-accent">work</span>
+                  <span>Practical Experience</span>
+                </h3>
+
+                <div className="space-y-6">
+                  <div className="glass-card p-6 rounded-2xl">
+                    <div className="flex flex-wrap items-start sm:items-center justify-between gap-1.5 mb-2">
+                      <h4 className="font-headline font-bold text-lg text-brand-textPrimary">
+                        Data Analyst Intern
+                      </h4>
+                      <span className="font-code text-xs sm:text-sm text-[#007BB8] font-bold">
+                        Zidio Development
+                      </span>
+                    </div>
+                    <div className="text-sm font-semibold text-brand-textSecondary mb-2">
+                      Remote, India • September 2025 – November 2025
+                    </div>
+                    <p className="text-xs sm:text-sm text-brand-textMuted leading-relaxed">
+                      Performed data cleaning and validation, developed interactive Power BI dashboards using DAX, and automated Excel reporting to generate actionable business insights and support data-driven decisions.
+                    </p>
+                  </div>
+
+                  <div className="glass-card p-6 rounded-2xl">
+                    <div className="flex flex-wrap items-start sm:items-center justify-between gap-1.5 mb-2">
+                      <h4 className="font-headline font-bold text-lg text-brand-textPrimary">
+                        Full-Stack AI & GenAI Engineering
+                      </h4>
+                      <span className="font-code text-xs sm:text-sm text-[#007BB8] font-bold">
+                        Independent Research
+                      </span>
+                    </div>
+                    <div className="text-sm font-semibold text-brand-textSecondary mb-2">
+                      Continuous Track • Projects & R&D
+                    </div>
+                    <p className="text-xs sm:text-sm text-brand-textMuted leading-relaxed">
+                      Architecting end-to-end full-stack applications with FastAPI & React, evaluating LLM outputs with deterministic safety gates, and building FAISS-powered RAG systems.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      );
+    }
+
+    // ==========================================
+    // 8. TECHNICAL ARSENAL & SKILLS SECTION
+    // ==========================================
+    function SkillsSection() {
+      const leftColGroups = [
+        {
+          name: 'AI & Machine Learning',
+          icon: 'psychology',
+          items: ['RAG & FAISS', 'LLaMA 3 & Groq', 'PyTorch & LoRA', 'LangChain']
+        },
+        {
+          name: 'Backend & APIs',
+          icon: 'dns',
+          items: ['Python', 'FastAPI', 'RESTful APIs', 'Node.js']
+        }
+      ];
+
+      const rightColGroups = [
+        {
+          name: 'Frontend & UI',
+          icon: 'web',
+          items: ['React 18 / 19', 'Next.js', 'JavaScript / ES6+', 'Tailwind CSS']
+        },
+        {
+          name: 'Databases & Cloud',
+          icon: 'cloud_done',
+          items: ['PostgreSQL / SQL', 'Supabase', 'Power BI / DAX', 'Git & Vercel']
+        }
+      ];
+
+      const renderSkillCard = (group, idx) => (
+        <div
+          key={idx}
+          className="bg-white/80 backdrop-blur-md rounded-2xl border border-[#BCE7F5] p-6 shadow-sm hover:border-[#00A3E0]/60 hover:shadow-md transition-all duration-300"
+        >
+          <div className="flex items-center justify-between mb-5">
+            <div className="flex items-center gap-2.5">
+              <div className="w-9 h-9 rounded-xl bg-[#E2F6FD] text-[#008ecb] border border-[#BCE7F5]/80 flex items-center justify-center shadow-xs">
+                <span className="material-symbols-outlined text-[20px]">{group.icon}</span>
+              </div>
+              <h3 className="font-headline font-bold text-base sm:text-lg text-[#081827]">
+                {group.name}
+              </h3>
+            </div>
+            <span className="font-code text-[11px] font-bold text-[#007BB8] tracking-wider px-2.5 py-0.5 rounded-full bg-[#E2F6FD] border border-[#BCE7F5]">
+              {group.items.length} Skills
+            </span>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+            {group.items.map((it, iIdx) => (
+              <div
+                key={iIdx}
+                className="skill-button-glow px-4 py-2.5 rounded-xl text-xs sm:text-[13px] font-code font-semibold text-[#082035] hover:text-[#007BB8] flex items-center justify-center text-center transition-all duration-200 cursor-default"
+              >
+                <span className="tracking-wide">{it}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+      );
+
+      return (
+        <section id="skills" className="py-20 border-t border-[#0090d0]/25">
+          <div className="max-w-[1240px] mx-auto px-4 sm:px-6 md:px-8">
+            <div className="flex flex-col mb-10">
+              <div className="pill-badge mb-3 w-fit">
+                <span className="material-symbols-outlined text-[16px]">military_tech</span>
+                <span>Technical Arsenal</span>
+              </div>
+              <h2 className="font-headline text-3xl sm:text-4xl font-extrabold text-[#071828] tracking-tight">
+                Skills & Technical Expertise
+              </h2>
+              <p className="font-body text-base md:text-lg text-[#2C4A63] mt-2 max-w-2xl">
+                Demonstrated core competencies across AI engineering, web systems, and cloud infrastructure.
+              </p>
+            </div>
+
+            {/* Unified Master White Background Border Box with Curved Corners */}
+            <div className="bg-white/95 backdrop-blur-md rounded-[28px] border border-[#BCE7F5] p-6 sm:p-8 md:p-10 shadow-[0_12px_45px_rgba(0,100,160,0.08)] relative overflow-hidden">
+              {/* Subtle Ambient Corner Glow */}
+              <div className="absolute top-0 right-0 w-64 h-64 bg-gradient-to-bl from-[#00C8FF]/15 via-transparent to-transparent rounded-tr-[28px] pointer-events-none" />
+
+              {/* 2-Column Layout: Up & Down Format (2 Left, 2 Right) */}
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8 relative z-10">
+                {/* Left Side: 2 stacked sections */}
+                <div className="flex flex-col gap-6">
+                  {leftColGroups.map((group, idx) => renderSkillCard(group, idx))}
+                </div>
+
+                {/* Right Side: 2 stacked sections */}
+                <div className="flex flex-col gap-6">
+                  {rightColGroups.map((group, idx) => renderSkillCard(group, idx + 2))}
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      );
+    }
+
+    // ==========================================
+    // 9. CONTACT & INQUIRY FORM (REACT STATE)
+    // ==========================================
+    function ContactSection() {
+      const [formState, setFormState] = useState({
+        name: '',
+        email: '',
+        solution: '',
+        timeline: '2 - 4 Weeks (Standard Sprint)',
+        message: ''
+      });
+      const [submitted, setSubmitted] = useState(false);
+      const [loading, setLoading] = useState(false);
+      const [copiedEmail, setCopiedEmail] = useState(false);
+      const [copiedPhone, setCopiedPhone] = useState(false);
+
+      const handleSubmit = (e) => {
+        e.preventDefault();
+        setLoading(true);
+        setTimeout(() => {
+          setLoading(false);
+          setSubmitted(true);
+        }, 700);
+      };
+
+      const copyEmail = (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        navigator.clipboard.writeText('karanbhoi1441@gmail.com');
+        setCopiedEmail(true);
+        setTimeout(() => setCopiedEmail(false), 2000);
+      };
+
+      const copyPhone = (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        navigator.clipboard.writeText('+919607242403');
+        setCopiedPhone(true);
+        setTimeout(() => setCopiedPhone(false), 2000);
+      };
+
+      return (
+        <section id="contact" className="py-20 border-t border-[#0090d0]/25 pb-28">
+          <div className="max-w-[1240px] mx-auto px-4 sm:px-6 md:px-8">
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-start">
+              
+              {/* Left Column: 5 Contact Cards with Exact Borders & Logos matching Image 1 */}
+              <div className="lg:col-span-5 flex flex-col">
+                <div className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full border border-[#0090d0]/35 bg-[#E2F6FD] text-[#006ca3] font-code text-xs font-bold tracking-wider mb-3 w-fit">
+                  <span className="material-symbols-outlined text-[15px]">mail</span>
+                  <span>START A CONVERSATION</span>
+                </div>
+                <h2 className="font-headline text-3xl sm:text-4xl font-extrabold text-[#081827] tracking-tight mb-3">
+                  Let's Build Your Web Solution
+                </h2>
+                <p className="font-body text-sm sm:text-base text-[#2C4A63] leading-relaxed mb-6">
+                  Have a new project, custom web app, AI tool, or software engineering role in mind? Send a project inquiry below or reach out directly.
+                </p>
+
+                <div className="space-y-3.5">
+                  {/* 1. WhatsApp Card with Instant Chat button */}
+                  <a
+                    href="https://wa.me/919607242403?text=Hi%20Karan,%20I%20have%20a%20project%20inquiry%20and%20would%20like%20to%20discuss%20it."
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="bg-white/95 backdrop-blur-md p-4 sm:p-4.5 rounded-2xl border border-emerald-300/70 hover:border-emerald-500 shadow-sm hover:shadow-md flex items-center justify-between transition-all duration-200 group"
+                  >
+                    <div className="flex items-center gap-3.5">
+                      <div className="w-11 h-11 rounded-2xl bg-emerald-50 text-emerald-600 border border-emerald-200 flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform">
+                        <svg className="w-5 h-5 fill-current" viewBox="0 0 24 24">
+                          <path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.711 2.598 2.669-.699c.969.586 1.761.884 2.79.884l.001-.001c3.182 0 5.767-2.587 5.768-5.766.001-3.18-2.585-5.769-5.768-5.769zm3.364 8.169c-.14.394-.799.743-1.127.79-.328.047-.735.068-2.348-.592-1.848-.756-3.045-2.639-3.137-2.763-.092-.124-.743-.989-.743-1.886 0-.897.468-1.338.636-1.52.168-.182.374-.228.498-.228.125 0 .25.002.359.007.115.006.269-.044.42.322.157.382.536 1.306.583 1.401.047.095.078.207.016.331-.063.125-.094.202-.187.311-.093.109-.196.244-.28.328-.094.093-.192.195-.083.382.109.187.483.796 1.036 1.288.712.634 1.312.83 1.499.923.187.094.296.079.406-.047.109-.125.468-.545.593-.732.125-.187.25-.156.42-.094.172.062 1.092.515 1.28.608.187.094.312.14.359.219.047.078.047.452-.093.846zM12 2C6.477 2 2 6.477 2 12c0 1.891.524 3.66 1.434 5.174L2 22l4.981-1.308A9.957 9.957 0 0012 22c5.523 0 10-4.477 10-10S17.523 2 12 2z"/>
+                        </svg>
+                      </div>
+                      <div>
+                        <div className="text-[10px] sm:text-[11px] font-code text-[#58768F] uppercase font-bold tracking-wider">
+                          WHATSAPP (DIRECT CHAT)
+                        </div>
+                        <div className="text-sm sm:text-[15px] font-headline font-bold text-[#081827] group-hover:text-emerald-700 transition-colors">
+                          +91 9607242403
+                        </div>
+                      </div>
+                    </div>
+                    <div className="px-3 py-1.5 rounded-xl bg-emerald-100/70 border border-emerald-300 text-emerald-800 text-xs font-headline font-bold flex items-center gap-1 group-hover:bg-emerald-200/80 transition-colors">
+                      <span>Instant Chat</span>
+                      <span className="material-symbols-outlined text-[15px]">arrow_outward</span>
+                    </div>
+                  </a>
+
+                  {/* 2. Gmail Card with Copy button */}
+                  <div className="bg-white/95 backdrop-blur-md p-4 sm:p-4.5 rounded-2xl border border-[#BCE7F5] hover:border-[#00A3E0] shadow-sm hover:shadow-md flex items-center justify-between transition-all duration-200 group">
+                    <a href="mailto:karanbhoi1441@gmail.com" className="flex items-center gap-3.5 flex-1 min-w-0">
+                      <div className="w-11 h-11 rounded-2xl bg-[#E2F6FD] text-[#007BB8] border border-[#BCE7F5] flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform">
+                        <span className="material-symbols-outlined text-[22px]">mail</span>
+                      </div>
+                      <div className="min-w-0 pr-2">
+                        <div className="text-[10px] sm:text-[11px] font-code text-[#58768F] uppercase font-bold tracking-wider">
+                          GMAIL (PROJECT INQUIRIES)
+                        </div>
+                        <div className="text-sm sm:text-[15px] font-headline font-bold text-[#081827] group-hover:text-[#007BB8] transition-colors truncate">
+                          karanbhoi1441@gmail.com
+                        </div>
+                      </div>
+                    </a>
+                    <div className="flex items-center gap-2 pl-2 shrink-0">
+                      <button
+                        type="button"
+                        onClick={copyEmail}
+                        className="px-2.5 py-1 rounded-lg text-xs font-code font-semibold border border-[#BCE7F5] bg-white text-[#2C4A63] hover:text-[#007BB8] hover:border-[#00A3E0] transition-colors cursor-pointer"
+                        title="Copy Email"
+                      >
+                        {copiedEmail ? 'Copied!' : 'Copy'}
+                      </button>
+                      <a href="mailto:karanbhoi1441@gmail.com" className="text-slate-400 group-hover:text-[#007BB8] transition-colors">
+                        <span className="material-symbols-outlined text-[18px]">arrow_outward</span>
+                      </a>
+                    </div>
+                  </div>
+
+                  {/* 3. Phone Call / SMS Card with Copy button */}
+                  <div className="bg-white/95 backdrop-blur-md p-4 sm:p-4.5 rounded-2xl border border-[#BCE7F5] hover:border-[#00A3E0] shadow-sm hover:shadow-md flex items-center justify-between transition-all duration-200 group">
+                    <a href="tel:+919607242403" className="flex items-center gap-3.5 flex-1 min-w-0">
+                      <div className="w-11 h-11 rounded-2xl bg-[#E2F6FD] text-[#007BB8] border border-[#BCE7F5] flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform">
+                        <span className="material-symbols-outlined text-[22px]">call</span>
+                      </div>
+                      <div className="min-w-0 pr-2">
+                        <div className="text-[10px] sm:text-[11px] font-code text-[#58768F] uppercase font-bold tracking-wider">
+                          PHONE CALL / SMS
+                        </div>
+                        <div className="text-sm sm:text-[15px] font-headline font-bold text-[#081827] group-hover:text-[#007BB8] transition-colors">
+                          +91 9607242403
+                        </div>
+                      </div>
+                    </a>
+                    <div className="flex items-center gap-2 pl-2 shrink-0">
+                      <button
+                        type="button"
+                        onClick={copyPhone}
+                        className="px-2.5 py-1 rounded-lg text-xs font-code font-semibold border border-[#BCE7F5] bg-white text-[#2C4A63] hover:text-[#007BB8] hover:border-[#00A3E0] transition-colors cursor-pointer"
+                        title="Copy Phone Number"
+                      >
+                        {copiedPhone ? 'Copied!' : 'Copy'}
+                      </button>
+                      <a href="tel:+919607242403" className="text-slate-400 group-hover:text-[#007BB8] transition-colors">
+                        <span className="material-symbols-outlined text-[18px]">arrow_outward</span>
+                      </a>
+                    </div>
+                  </div>
+
+                  {/* 4. GitHub Repositories Card */}
+                  <a
+                    href="https://github.com/karanxai"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="bg-white/95 backdrop-blur-md p-4 sm:p-4.5 rounded-2xl border border-[#BCE7F5] hover:border-[#00A3E0] shadow-sm hover:shadow-md flex items-center justify-between transition-all duration-200 group"
+                  >
+                    <div className="flex items-center gap-3.5 min-w-0">
+                      <div className="w-11 h-11 rounded-2xl bg-[#E2F6FD] text-[#081827] border border-[#BCE7F5] flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform">
+                        <svg className="w-5 h-5 fill-current" viewBox="0 0 24 24">
+                          <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z" />
+                        </svg>
+                      </div>
+                      <div className="min-w-0">
+                        <div className="text-[10px] sm:text-[11px] font-code text-[#58768F] uppercase font-bold tracking-wider">
+                          GITHUB REPOSITORIES
+                        </div>
+                        <div className="text-sm sm:text-[15px] font-headline font-bold text-[#081827] group-hover:text-[#007BB8] transition-colors truncate">
+                          github.com/karanxai
+                        </div>
+                      </div>
+                    </div>
+                    <span className="material-symbols-outlined text-slate-400 group-hover:text-[#007BB8] text-[18px]">
+                      arrow_outward
+                    </span>
+                  </a>
+
+                  {/* 5. LinkedIn Network Card */}
+                  <a
+                    href="https://www.linkedin.com/in/karanbhoi2005"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="bg-white/95 backdrop-blur-md p-4 sm:p-4.5 rounded-2xl border border-[#BCE7F5] hover:border-[#00A3E0] shadow-sm hover:shadow-md flex items-center justify-between transition-all duration-200 group"
+                  >
+                    <div className="flex items-center gap-3.5 min-w-0">
+                      <div className="w-11 h-11 rounded-2xl bg-[#E2F6FD] text-[#0077B5] border border-[#BCE7F5] flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform">
+                        <svg className="w-5 h-5 fill-current" viewBox="0 0 24 24">
+                          <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
+                        </svg>
+                      </div>
+                      <div className="min-w-0">
+                        <div className="text-[10px] sm:text-[11px] font-code text-[#58768F] uppercase font-bold tracking-wider">
+                          LINKEDIN NETWORK
+                        </div>
+                        <div className="text-sm sm:text-[15px] font-headline font-bold text-[#081827] group-hover:text-[#007BB8] transition-colors truncate">
+                          linkedin.com/in/karanbhoi2005
+                        </div>
+                      </div>
+                    </div>
+                    <span className="material-symbols-outlined text-slate-400 group-hover:text-[#007BB8] text-[18px]">
+                      arrow_outward
+                    </span>
+                  </a>
+                </div>
+              </div>
+
+              {/* Right Column: Clean Form Card with exact fields matching Image 1 */}
+              <div className="lg:col-span-7">
+                <div className="bg-white/95 backdrop-blur-md rounded-[28px] border border-[#BCE7F5] p-6 sm:p-8 md:p-9 shadow-[0_12px_40px_rgba(0,100,160,0.08)]">
+                  {submitted ? (
+                    <div className="py-12 text-center flex flex-col items-center">
+                      <div className="w-16 h-16 rounded-full bg-emerald-500/20 text-emerald-600 flex items-center justify-center mb-4">
+                        <span className="material-symbols-outlined text-[36px]">check_circle</span>
+                      </div>
+                      <h3 className="font-headline text-2xl font-bold text-[#081827] mb-2">
+                        Inquiry Sent Successfully!
+                      </h3>
+                      <p className="font-body text-[#2C4A63] max-w-md mb-6 text-sm">
+                        Thank you for reaching out. Karan will review your message and reply via email within 24 hours.
+                      </p>
+                      <button
+                        onClick={() => {
+                          setSubmitted(false);
+                          setFormState({ name: '', email: '', solution: '', timeline: '2 - 4 Weeks (Standard Sprint)', message: '' });
+                        }}
+                        className="px-5 py-2.5 rounded-xl font-semibold text-sm bg-gradient-to-r from-[#006ca3] to-[#009fd6] text-white shadow-sm"
+                      >
+                        Send Another Note
+                      </button>
+                    </div>
+                  ) : (
+                    <div>
+                      {/* Pill Badge matching Image 1 */}
+                      <div className="inline-flex items-center px-3.5 py-1 rounded-full border border-[#0090d0]/35 bg-[#E2F6FD] text-[#006ca3] font-code text-xs font-semibold tracking-wider mb-3">
+                        Freelance & Engineering Inquiries
+                      </div>
+
+                      <h3 className="font-headline text-2xl sm:text-3xl font-extrabold text-[#081827] mb-2 tracking-tight">
+                        Start a Project / Send a Note
+                      </h3>
+                      <p className="font-body text-sm sm:text-[15px] text-[#2C4A63] leading-relaxed mb-6">
+                        Tell me about your project or role. I'll get back to you within 24 hours with ideas, architecture suggestions, and estimated timelines.
+                      </p>
+
+                      <form onSubmit={handleSubmit} className="space-y-4">
+                        {/* Row 1: Name & Email */}
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                          <div>
+                            <label className="block text-xs font-headline font-bold text-[#081827] mb-1.5">
+                              Your Name
+                            </label>
+                            <input
+                              type="text"
+                              required
+                              value={formState.name}
+                              onChange={(e) => setFormState({ ...formState, name: e.target.value })}
+                              placeholder="e.g. Alex Taylor"
+                              className="w-full px-4 py-3 rounded-2xl bg-white border border-[#BCE7F5] text-[#081827] placeholder:text-slate-400 focus:border-[#00A3E0] focus:outline-none focus:ring-2 focus:ring-[#00A3E0]/20 font-body text-sm transition-all shadow-2xs"
+                            />
+                          </div>
+                          <div>
+                            <label className="block text-xs font-headline font-bold text-[#081827] mb-1.5">
+                              Your Email
+                            </label>
+                            <input
+                              type="email"
+                              required
+                              value={formState.email}
+                              onChange={(e) => setFormState({ ...formState, email: e.target.value })}
+                              placeholder="e.g. alex@company.com"
+                              className="w-full px-4 py-3 rounded-2xl bg-white border border-[#BCE7F5] text-[#081827] placeholder:text-slate-400 focus:border-[#00A3E0] focus:outline-none focus:ring-2 focus:ring-[#00A3E0]/20 font-body text-sm transition-all shadow-2xs"
+                            />
+                          </div>
+                        </div>
+
+                        {/* Row 2: Solution Needed & Target Timeline */}
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                          <div>
+                            <label className="block text-xs font-headline font-bold text-[#081827] mb-1.5">
+                              Solution Needed
+                            </label>
+                            <div className="relative">
+                              <select
+                                value={formState.solution}
+                                onChange={(e) => setFormState({ ...formState, solution: e.target.value })}
+                                className="w-full px-4 py-3 rounded-2xl bg-white border border-[#BCE7F5] text-[#081827] focus:border-[#00A3E0] focus:outline-none focus:ring-2 focus:ring-[#00A3E0]/20 font-body text-sm transition-all appearance-none cursor-pointer pr-10 shadow-2xs"
+                              >
+                                <option value="">Select Solution Type...</option>
+                                <option value="Custom Full-Stack Web Application">Custom Full-Stack Web Application</option>
+                                <option value="AI-Powered Web Tool / Application">AI-Powered Web Tool / Application</option>
+                                <option value="Interactive Dashboard & Analytics Portal">Interactive Dashboard & Analytics Portal</option>
+                                <option value="Website Modernization / Redesign">Website Modernization / Redesign</option>
+                                <option value="API Engineering & Backend Integrations">API Engineering & Backend Integrations</option>
+                                <option value="Full-Time / Contract Engineering Role">Full-Time / Contract Engineering Role</option>
+                                <option value="Other / Technical Consulting">Other / Technical Consulting</option>
+                              </select>
+                              <div className="absolute right-3.5 top-1/2 -translate-y-1/2 pointer-events-none text-slate-500">
+                                <span className="material-symbols-outlined text-[20px]">expand_more</span>
+                              </div>
+                            </div>
+                          </div>
+
+                          <div>
+                            <label className="block text-xs font-headline font-bold text-[#081827] mb-1.5">
+                              Target Timeline
+                            </label>
+                            <div className="relative">
+                              <select
+                                value={formState.timeline}
+                                onChange={(e) => setFormState({ ...formState, timeline: e.target.value })}
+                                className="w-full px-4 py-3 rounded-2xl bg-white border border-[#BCE7F5] text-[#081827] focus:border-[#00A3E0] focus:outline-none focus:ring-2 focus:ring-[#00A3E0]/20 font-body text-sm transition-all appearance-none cursor-pointer pr-10 shadow-2xs"
+                              >
+                                <option value="2 - 4 Weeks (Standard Sprint)">2 - 4 Weeks (Standard Sprint)</option>
+                                <option value="1 - 2 Weeks (Fast-Track MVP)">1 - 2 Weeks (Fast-Track MVP)</option>
+                                <option value="1 - 2 Months (Complex Solution)">1 - 2 Months (Complex Solution)</option>
+                                <option value="Flexible / Immediate Role">Flexible / Immediate Role</option>
+                              </select>
+                              <div className="absolute right-3.5 top-1/2 -translate-y-1/2 pointer-events-none text-slate-500">
+                                <span className="material-symbols-outlined text-[20px]">expand_more</span>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+
+                        {/* Row 3: Project Overview & Goals */}
+                        <div>
+                          <label className="block text-xs font-headline font-bold text-[#081827] mb-1.5">
+                            Project Overview & Goals
+                          </label>
+                          <textarea
+                            required
+                            rows="4"
+                            value={formState.message}
+                            onChange={(e) => setFormState({ ...formState, message: e.target.value })}
+                            placeholder="Tell me about what you're looking to build, any key features, problems to solve, or questions you have..."
+                            className="w-full px-4 py-3 rounded-2xl bg-white border border-[#BCE7F5] text-[#081827] placeholder:text-slate-400 focus:border-[#00A3E0] focus:outline-none focus:ring-2 focus:ring-[#00A3E0]/20 font-body text-sm transition-all resize-none shadow-2xs"
+                          ></textarea>
+                        </div>
+
+                        {/* Submit Button matching Image 1 shape + Image 2 color */}
+                        <div className="pt-2">
+                          <button
+                            type="submit"
+                            disabled={loading}
+                            className="w-full py-3.5 px-6 rounded-2xl font-headline font-bold text-base text-white bg-gradient-to-r from-[#006ca3] via-[#007bb8] to-[#009fd6] hover:brightness-105 shadow-[0_6px_20px_rgba(0,110,175,0.3)] hover:shadow-[0_8px_25px_rgba(0,130,200,0.45)] hover:-translate-y-0.5 active:translate-y-0 flex items-center justify-center gap-2 transition-all cursor-pointer"
+                          >
+                            {loading ? (
+                              <span className="material-symbols-outlined text-[20px] animate-spin">progress_activity</span>
+                            ) : (
+                              <>
+                                <span>Submit Project Inquiry</span>
+                                <svg className="w-4 h-4 fill-none stroke-current stroke-2 -rotate-12" viewBox="0 0 24 24">
+                                  <path d="m22 2-7 20-4-9-9-4Z" />
+                                  <path d="M22 2 11 13" />
+                                </svg>
+                              </>
+                            )}
+                          </button>
+                        </div>
+                      </form>
+                    </div>
+                  )}
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </section>
+      );
+    }
+
+    // ==========================================
+    // 10. FOOTER COMPONENT
+    // ==========================================
+    function Footer() {
+      return (
+        <footer className="w-full border-t border-[#0090d0]/25 bg-white/40 backdrop-blur-md py-6 sm:py-8 mt-auto">
+          <div className="max-w-[1240px] mx-auto px-4 sm:px-6 md:px-8 flex flex-col md:flex-row items-center justify-between gap-4 sm:gap-6 text-xs sm:text-sm font-body text-[#2C4A63]">
+            <div className="text-center md:text-left">
+              Designed with Kinetic Aesthetics for <strong className="font-bold text-[#081827]">Karan Bhoi</strong> © {new Date().getFullYear()}.
+            </div>
+
+            <div className="flex flex-wrap items-center justify-center gap-4 sm:gap-6 font-medium">
+              <a
+                href="mailto:karanbhoi1441@gmail.com"
+                className="hover:text-[#007BB8] transition-colors"
+              >
+                karanbhoi1441@gmail.com
+              </a>
+              <a
+                href="https://github.com/karanxai"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hover:text-[#007BB8] transition-colors"
+              >
+                GitHub
+              </a>
+              <a
+                href="https://www.linkedin.com/in/karanbhoi2005"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hover:text-[#007BB8] transition-colors"
+              >
+                LinkedIn
+              </a>
+              <a
+                href="#journey"
+                className="hover:text-[#007BB8] transition-colors"
+              >
+                Download Resume
+              </a>
+              <a
+                href="#hero"
+                className="hover:text-[#007BB8] text-[#007BB8] font-bold transition-colors"
+              >
+                Back to Top ↑
+              </a>
+            </div>
+          </div>
+        </footer>
+      );
+    }
+
+    // ==========================================
+    // 11. MAIN APP ROOT COMPONENT
+    // ==========================================
+    function App() {
+      return (
+        <>
+          <BackgroundDotsCanvas dotSpeed={0.8} dotCount={80} connectDistance={115} />
+          <Navbar />
+          <main className="flex-1 w-full">
+            <HeroSection />
+            <ServicesSection />
+            <ProjectsSection />
+            <ProcessSection />
+            <JourneySection />
+            <SkillsSection />
+            <ContactSection />
+          </main>
+          <Footer />
+        </>
+      );
+    }
+
+    const container = document.getElementById('root');
+    const root = ReactDOM.createRoot(container);
+    root.render(<App />);
+  </script>
+</body>
+</html>
